@@ -29,12 +29,15 @@ object EnterpriseDao {
 object WhatsWrong2 {
 
   //Review this code. What could be done better ? How would you do it ?
+  //We need to create futures first before using them in the for comprehension in order to allowed the futures to be run in parallel
   def getCEOAndEnterprise(ceo_id: Option[String]): Future[(Option[CEO], Option[Enterprise])] = {
+    val ceo = CEODao.byId(ceo_id.get)
+    val enterprise = EnterpriseDao.byCEOId(ceo_id.get)
     for {
-      ceo <- CEODao.byId(ceo_id.get)
-      enterprise <- EnterpriseDao.byCEOId(ceo_id.get)
+      c <- ceo
+      e <- enterprise
     } yield {
-      (ceo, enterprise)
+      (c, e)
     }
   }
 }

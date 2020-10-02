@@ -4,7 +4,7 @@ object WhatsWrong1 {
 
   trait Interface {
     val city: String
-    val support: String = s"Ici c'est $city !"
+    def support: String = s"Ici c'est $city !"
   }
 
   case object Supporter extends Interface {
